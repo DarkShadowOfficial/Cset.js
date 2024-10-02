@@ -16,7 +16,7 @@ class ComplexNumber {
                 this.im = parts[1].replace("i", "") == "" ? 1 : parseFloat(parts[1].replace("i", ""));
                 this.re = parseFloat(parts[0]);
             }
-        } else if (x.includes("-") && x.charAt("-") > 0) {
+        } else if (x.includes("-") && x.search("-") > 0) {
             let parts = x.split("-");
             if (parts[0].includes("i")) {
                 this.im = parts[0].replace("i", "") == "" ? 1 : parseFloat(parts[0].slice(0, parts[0].length));
@@ -182,5 +182,49 @@ class ComplexNumber {
             return "0";
         }
         return `${r == 1 ? "" : r}e^(${theta/PI}pi*i)`;
+    }
+    #unitCircle(angle) {
+        let f = angle / PI;
+        while (f < 0) {
+            f += 2;
+        }
+        while (f >= 2) {
+            f -= 2;
+        }
+        if (f > 0 && f <= 0.5) {
+            return {r: 1, i: -1};
+        } else if (f > 0.5 && f <= 1) {
+            return {r: 1, i: 1};
+        } else if (f > 1 && f <= 1.5) {
+            return {r: -1, i: 1};
+        } else if (f > 1.5 && f < 2) {
+            return {r: 1, i: 1};
+        }
+        if (f == 0) {
+            return {r: 1, i: 0}
+        }
+    }
+    polarToComplex(polar) {
+        let r = polar.split("e")[0];
+        if (r == "") r = 1;
+        if (r == "-") r = -1;
+        r = parseFloat(r);
+        let theta = polar.split("^")[1]
+        theta = theta.replace("i", "");
+        theta = theta.replace("*", "");
+        theta = theta.replace(")", "");
+        theta = theta.replace("(", "");
+        if (theta == "") theta = 1;
+        if (theta == "-") theta = -1;
+        theta = parseFloat(theta);
+        let m = this.#unitCircle(theta);
+        let re = r*cos(theta);
+        let im = sqrt(r**2 - re**2);
+        console.log(re, im)
+        re *= m.r;
+        im *= m.i;
+        console.log(re, im)
+        let complex = this.normalize(round(re*1000)/1000, round(im*1000)/1000);
+        return new ComplexNumber(complex);
     }
 }
