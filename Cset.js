@@ -191,17 +191,15 @@ class ComplexNumber {
         while (f >= 2) {
             f -= 2;
         }
-        if (f > 0 && f <= 0.5) {
-            return {r: 1, i: -1};
-        } else if (f > 0.5 && f <= 1) {
-            return {r: 1, i: 1};
-        } else if (f > 1 && f <= 1.5) {
-            return {r: -1, i: 1};
-        } else if (f > 1.5 && f < 2) {
-            return {r: 1, i: 1};
-        }
         if (f == 0) {
             return {r: 1, i: 0}
+        }
+        if (f > 0 && f <= 0.5) {
+            return {r: 1, i: -1};
+        } else if (f > 0.5 && f < 1) {
+            return {r: 1, i: -1}
+        } else {
+            return {r: 1, i: 1};
         }
     }
     polarToComplex(polar) {
