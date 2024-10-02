@@ -27,3 +27,12 @@ console.log(ComplexNumber.prototype.add("1 + i", "1 - i").Normalize()) // return
 To convert a complex to polar form, you can use the `.Polar()` or `.polar(complex as a string)` method. This returns the polar form in the format "re^(tpi*i)". "r" is given as a decimal to the nearest thousandth, while tpi is in radians. However, to make things easier, the pi is factored out for easier understanding of the angle. For example, rather than outputting 1.57..., it gives 0.5pi, so one can easily realize the angle is pi/2.
 
 The library also can return the complex conjugate, using either the `.Conjugate()` method, which returns the conjugate of the instance, or the `.conjugate(complex as string)`, which returns the conjugate of a specified complex number. These return the conjugate in the form of an instance of class `ComplexNumber`.
+
+###### Update: Oct 2, 2024 - 11:14 AM
+
+You are now able to convert from polar form to complex form.
+```
+console.log(complex.polarToComplex("2e^" + PI/2 + "i").Normalize()) // returns -2i
+```
+
+Make sure to put it in the form re^ci. C should not have anything except your angle, such as 1.57...; Do not put 0.5pi, this will not work. Must calculate angle before plugging it in.
